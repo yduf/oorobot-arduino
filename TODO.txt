@@ -1,0 +1,4 @@
+- add checksum to enable eeprom storage of calibration
+- find how to use calibration
+
+- add a calibration doc in Readme
