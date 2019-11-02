@@ -114,6 +114,9 @@ void switchOffLED() {
   Serial.println(F("switch off LED"));
 }
 
+// transform
+// U/D/L/R/P to special characters ( see charset.h)
+// leave other command intact
 char commandToDisplay(char c) {
   switch (c) {
     case 'U':

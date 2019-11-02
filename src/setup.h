@@ -11,8 +11,6 @@ void setup() {
     Serial.println("Conf default");
   }
 
-  delay( 2000);
-
   setupButtons();
 
   // stepper motors init

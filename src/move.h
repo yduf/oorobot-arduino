@@ -65,6 +65,7 @@ void doCircle(float radius, float angle, boolean reverseOrientation){
 
 }
 
+// conver distance to number of steps
 int cm2step( short cm) {
   int target = (int) ((float) cm * (float)params.lineSteps / 10.0f);
 #ifdef INVERT_DIRECTION

@@ -1,9 +1,9 @@
 #include <EEPROM.h>
 
 struct Params {
-  int stepCm;           // for doCircle
+  int stepCm;           // move distance for 1 actions (14cm)
   int turnSteps;        // see deg2step: nb step for 90deg
-  int lineSteps;        // see cm2step
+  int lineSteps;        // see cm2step:  nb step for 10cm
   char btName[16];      // bluetooth name
 
   int crc;              // crc for validating params
@@ -54,31 +54,10 @@ bool loadParams() {
   int check = computeCRC( savedParams);
 
   if( check != savedParams.crc) {
-    savedParams = default_params;
+    params = default_params;
     return false;
   }
 
+  params = savedParams;
   return true;
-/*
-  if (savedParams.btName[0] >= 48) {
-    strcpy(params.btName, savedParams.btName);
-  } else {
-    strcpy(params.btName, default_params.btName);  
-  }
-  
-  if (savedParams.stepCm > 0 && savedParams.stepCm < 500) {
-    params.stepCm = savedParams.stepCm;
-  } else {
-    params.stepCm = default_params.stepCm;
-  }
-  if (savedParams.turnSteps > 0 && savedParams.turnSteps < 5000) {
-    params.turnSteps = savedParams.turnSteps;
-  } else {
-    params.turnSteps=default_params.turnSteps;
-  }
-  if (savedParams.lineSteps > 0 && savedParams.lineSteps < 500) {
-    params.lineSteps = savedParams.lineSteps;
-  } else {
-    params.lineSteps = default_params.lineSteps;
-  }*/
 }
