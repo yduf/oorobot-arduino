@@ -1,10 +1,19 @@
 void setup() {
   Serial.begin(9600);
-  //loadParams();
-  setupButtons();
   Serial.println(F("Setup"));
 
   lcd.setup();
+
+  if( loadParams()) {
+    Serial.println("Conf chargée");
+  }
+  else {
+    Serial.println("Conf default");
+  }
+
+  delay( 2000);
+
+  setupButtons();
 
   // stepper motors init
   stepper1.setMaxSpeed(900);

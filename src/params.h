@@ -5,7 +5,23 @@ struct Params {
   int turnSteps;        // see deg2step: nb step for 90deg
   int lineSteps;        // see cm2step
   char btName[16];      // bluetooth name
+
+  int crc;              // crc for validating params
 };
+
+// very simple crc function
+int computeCRC( const Params& p) {
+  int sum = 0;
+  sum += p.stepCm;
+  sum += p.turnSteps;
+  sum += p.lineSteps;
+
+  for( int* i = (int*) p.btName; i < (int*)( p.btName + 16); ++i) {
+    sum += *i;
+  }
+
+  return sum;
+}
 
 // https://www.makerguides.com/28byj-48-stepper-motor-arduino-tutorial/
 // noir
@@ -20,18 +36,30 @@ const int turnSteps_90 = 1300;          // was 1430;
 const int step_10cm    = 155;           // was 100
 #endif
 
-const Params default_params = {140, turnSteps_90, step_10cm, "oorobot"};
+const Params default_params = {140, turnSteps_90, step_10cm, "oorobot", 0};
 Params params = default_params;
 
 
 void saveParams() {
+  params.crc = computeCRC( params);
   EEPROM.put(0, params);
 }
 
-void loadParams() {
+// load saved params
+// indicate if checksum was ok
+bool loadParams() {
   Params savedParams;
   EEPROM.get(0, savedParams);
 
+  int check = computeCRC( savedParams);
+
+  if( check != savedParams.crc) {
+    savedParams = default_params;
+    return false;
+  }
+
+  return true;
+/*
   if (savedParams.btName[0] >= 48) {
     strcpy(params.btName, savedParams.btName);
   } else {
@@ -52,5 +80,5 @@ void loadParams() {
     params.lineSteps = savedParams.lineSteps;
   } else {
     params.lineSteps = default_params.lineSteps;
-  }
+  }*/
 }
