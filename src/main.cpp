@@ -11,8 +11,13 @@
 #include <Wire.h>
 #include <Servo.h>
 #include "charset.h"
-#include "buttons.h"
 
+// choose between switch or analog keyboard
+#if 0
+#include "keyboard_buttons.h"
+#else
+#include "keyboard_analog.h"
+#endif
 
 #define OOROBOT_VERSION "1.1.3"
 
@@ -414,8 +419,4 @@ boolean isCommandTerminated() {
   }
 }
 
-
-
 #include "loop.h"
-
-
