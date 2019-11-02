@@ -201,7 +201,7 @@ void updateScreen() {
       }
       if (lineIdx<2) {
         lcd.setCursor(0, lineIdx);
-        lcd.print(F(" 1cm:"));
+        lcd.print(F(" 10cm:"));
         lcd.print(params.lineSteps);
         lcd.print(F("pas"));
         lcd.setCursor(0, lineIdx+1);
